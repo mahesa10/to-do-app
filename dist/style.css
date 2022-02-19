@@ -38,7 +38,7 @@ header h1 {
 aside {
   grid-column: 1;
   background-color: lightgray;
-  padding: 32px;
+  padding: 8px;
   display: flex;
   flex-direction: column;
   gap: 48px;
@@ -46,26 +46,32 @@ aside {
 
 h2 {
   margin: 0;
+  font-weight: 600;
 }
 
 aside .default-project-container {
   display: flex;
   flex-direction: column;
-  gap: 24px;
 }
 
 aside .default-project {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-weight: 600;
+  font-weight: 500;
   font-size: 1.2rem;
+  padding: 8px 24px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+aside .default-project:hover {
+  background-color: gray;
 }
 
 aside .custom-project-container {
   display: flex;
   flex-direction: column;
-  gap: 16px;
 }
 
 aside .custom-project-header {
@@ -73,18 +79,29 @@ aside .custom-project-header {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 8px;
+  padding: 8px 24px;
 }
 
 .custom-project-header button {
   border: none;
   background-color: transparent;
-  padding: 2px;
   font-size: 1.4rem;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 4px;
+}
+
+.custom-project-header button:hover {
+  background-color: gray;
 }
 
 aside .custom-project {
   font-weight: 500;
+  padding: 8px 24px;
 }
 
 p {
