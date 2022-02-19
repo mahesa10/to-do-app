@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Round" rel="stylesheet">
 </head>
 <body>
   <header>
@@ -19,25 +20,46 @@
   </header>
 
   <aside>
-    <div class="default-project">
-      <div>
+    <div class="default-project-container">
+      <div class="default-project">
+        <span class="material-icons">done_all</span>
         <p>All Tasks</p>
       </div>
-      <div>
+      <div class="default-project">
+        <span class="material-icons">today</span>
         <p>Today</p>
       </div>
-      <div>
+      <div class="default-project">
+        <span class="material-icons">date_range</span>
         <p>This Week</p>
       </div>
     </div>
 
-    <div class="custom-project">
-      <h2>Projects</h2>
+    <div class="custom-project-container">
+      <div class="custom-project-header">
+        <h2>Projects</h2>
+        <button class="material-icons">add</button>
+      </div>
+
+      <div class="custom-project">
+        <p>Custom Project 1</p>
+      </div>
+      
+      <div class="custom-project">
+        <p>Custom Project 2</p>
+      </div>
     </div>
   </aside>
 
   <main>
+    <h2 class="project-title">All Tasks</h2>
 
+    <div class="task-list">
+      <div class="add-task">
+        <span class="material-icons md-18">add</span>
+        <p>Add Task</p>
+      </div>
+    </div>
   </main>
   
   <footer>

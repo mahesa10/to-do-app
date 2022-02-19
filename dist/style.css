@@ -2,7 +2,7 @@ html {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  font-size: 18px;
+  font-size: 14px;
 }
 
 *, *:before, *:after {
@@ -17,7 +17,7 @@ body {
   height: 100vh;
   max-width: 100%;
   display: grid;
-  grid-template-columns: 300px 1fr;
+  grid-template-columns: 250px 1fr;
   grid-template-rows: 82px 1fr 50px;
   font-family: 'Inter', sans-serif;
 }
@@ -41,13 +41,50 @@ aside {
   padding: 32px;
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 48px;
+}
+
+h2 {
+  margin: 0;
+}
+
+aside .default-project-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
 aside .default-project {
   display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+aside .custom-project-container {
+  display: flex;
   flex-direction: column;
   gap: 16px;
+}
+
+aside .custom-project-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.custom-project-header button {
+  border: none;
+  background-color: transparent;
+  padding: 2px;
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+
+aside .custom-project {
+  font-weight: 500;
 }
 
 p {
@@ -56,6 +93,21 @@ p {
 
 main {
   grid-column: 2;
+  padding: 32px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+main .project-title {
+  font-size: 1.75rem;
+}
+
+main .add-task {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.125rem;
 }
 
 footer {
@@ -65,5 +117,4 @@ footer {
   justify-content: center;
   align-items: center;
   font-weight: 500;
-  font-size: 0.9rem;
 }
