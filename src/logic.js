@@ -2,7 +2,6 @@ import Project from "./projects";
 
 const todo = (() => {
   let projectList = [];
-  projectList.push(new Project("All Tasks"));
   projectList.push(new Project("Today"));
   projectList.push(new Project("This Week"));
 

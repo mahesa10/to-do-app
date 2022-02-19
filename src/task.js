@@ -1,8 +1,9 @@
 export default class Task {
-  constructor(title, description = "", dueDate = "No date") {
+  constructor(title, dueDate = "No date", isCompleted = false, description = "") {
     this.title = title;
-    this.description = description;
     this.dueDate = dueDate;
+    this.isCompleted = isCompleted;
+    this.description = description;
   }
 
   setTaskTitle(title) {
@@ -13,7 +14,7 @@ export default class Task {
     this.dueDate = date;
   }
 
-  setDescriptionn(desc) {
+  setDescription(desc) {
     this.description = desc
   }
 
