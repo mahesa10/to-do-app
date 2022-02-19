@@ -18,30 +18,25 @@ body {
   max-width: 100%;
   display: grid;
   grid-template-columns: 250px 1fr;
-  grid-template-rows: 82px 1fr 50px;
+  grid-template-rows: 1fr 50px;
   font-family: 'Inter', sans-serif;
 }
 
 header {
-  grid-column: 1 / span 2;
-  background-color: gray;
-  display: flex;
-  align-items: center;
-  padding: 32px;
-  max-height: 100%;
-}
-
-header h1 {
-  margin: 0;
-}
-
-aside {
   grid-column: 1;
   background-color: lightgray;
   padding: 8px;
   display: flex;
   flex-direction: column;
-  gap: 48px;
+  gap: 32px;
+}
+
+header .logo {
+  padding: 16px 24px;
+}
+
+header h1 {
+  margin: 0;
 }
 
 h2 {
@@ -49,12 +44,12 @@ h2 {
   font-weight: 600;
 }
 
-aside .default-project-container {
+header .default-project-container {
   display: flex;
   flex-direction: column;
 }
 
-aside .default-project {
+header .default-project {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -65,16 +60,16 @@ aside .default-project {
   cursor: pointer;
 }
 
-aside .default-project:hover {
+header .default-project:hover {
   background-color: gray;
 }
 
-aside .custom-project-container {
+header .custom-project-container {
   display: flex;
   flex-direction: column;
 }
 
-aside .custom-project-header {
+header .custom-project-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -99,7 +94,7 @@ aside .custom-project-header {
   background-color: gray;
 }
 
-aside .custom-project {
+header .custom-project {
   font-weight: 500;
   padding: 8px 24px;
 }
@@ -113,18 +108,30 @@ main {
   padding: 32px 48px;
   display: flex;
   flex-direction: column;
-  gap: 32px;
 }
 
 main .project-title {
   font-size: 1.75rem;
+  margin-bottom: 32px;
 }
 
 main .add-task {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 1.125rem;
+}
+
+.add-task input {
+  font-size: 1rem;
+  padding: 8px;
+  width: 600px;
+  font-family: inherit;
+  border: 2px solid hsl(0, 0%, 70%);
+  border-radius: 4px;
+}
+
+.add-task input:focus {
+  outline: none;
 }
 
 footer {
