@@ -20,8 +20,8 @@
     
     <div class="default-project-container">
       <div class="default-project">
-        <span class="material-icons">done_all</span>
-        <p>All Tasks</p>
+        <span class="material-icons">inbox</span>
+        <p>Inbox</p>
       </div>
       <div class="default-project">
         <span class="material-icons">today</span>
@@ -39,26 +39,35 @@
         <button class="material-icons">add</button>
       </div>
 
-      <div class="custom-project">
+      <!-- <div class="custom-project">
         <p>Custom Project 1</p>
       </div>
       
       <div class="custom-project">
         <p>Custom Project 2</p>
-      </div>
+      </div> -->
     </div>
   </header>
 
   <main>
-    <h2 class="project-title">All Tasks</h2>
+    <h2 class="project-title">Inbox</h2>
 
     <div class="add-task">
       <span class="material-icons md-18">add</span>
       <p>Add Task</p>
     </div>
+
+    <div class="add-task-input">
+      <input type="text" name="task-title" id="task-title" required>
+      <textarea name="task-description" id="task-description" cols="30" rows="10"></textarea>
+      <div class="add-task-btn">
+        <button class="btn-add-task">Add Task</button>
+        <button class="btn-cancel-task">Cancel</button>
+      </div>
+    </div>
     
     <div class="task-list">
-      <label for="task1" class="task">
+      <!-- <label for="task1" class="task">
         <input type="checkbox" name="" id="task1">
         Task1
       </label>
@@ -69,7 +78,7 @@
       <label for="task3" class="task">
         <input type="checkbox" name="" id="task3">
         Task3
-      </label>
+      </label> -->
     </div>
   </main>
   
