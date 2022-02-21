@@ -5,8 +5,6 @@ const toDoList = (() => {
   projectList.push(new Project("Inbox"));
   projectList.push(new Project("Today"));
   projectList.push(new Project("This Week"));
-  projectList.push(new Project("Test 1"));
-  projectList.push(new Project("Test 2"));
 
   let activeProjectName = "Inbox";
 
@@ -29,7 +27,14 @@ const toDoList = (() => {
   // const addThisWeekTask = (task) => getProject("This Week").addTasktoProject(task);
   
 
-  return { addNewProject, getAllProjects, getProject, setActiveProjectName, getActiveProject };
+  return {
+    addNewProject,
+    getAllProjects,
+    getProject,
+    setActiveProjectName,
+    getActiveProjectName,
+    getActiveProject
+  };
 })();
 
 export default toDoList;

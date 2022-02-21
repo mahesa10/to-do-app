@@ -45,7 +45,8 @@ const webInterface = (() => {
     if (projectList.length > 3) {
       for (let i = 3; i < projectList.length; i++) {
         const customProject = document.createElement("div");
-        customProject.classList.add("custom-project");
+        customProject.className = "project custom-project";
+        customProject.setAttribute("data-project", `${projectList[i].name}`);
         const customProjectName = document.createElement("p");
         customProjectName.textContent = projectList[i].name
         customProject.appendChild(customProjectName);
@@ -56,6 +57,7 @@ const webInterface = (() => {
 
   const displayTask = () => {
     const taskListDiv = document.querySelector(".task-list");
+    taskListDiv.textContent = "";
     let activeProject = toDoList.getActiveProject();
     let projectTasks = activeProject.getProjectTasks();
     projectTasks.forEach((task, index) => {
@@ -76,7 +78,29 @@ const webInterface = (() => {
     })
   }
 
-  return { taskBtnListener, displayCustomProjects, displayTask };
+  const displayProjectPage = () => {
+    const projectTitle = document.querySelector(".project-title");
+    projectTitle.textContent = toDoList.getActiveProjectName();
+  }
+
+  const projectListener = () => {
+    const defaultProject = document.querySelectorAll(".project");
+    defaultProject.forEach(project => {
+      project.addEventListener("click", (e) => {
+        toDoList.setActiveProjectName(e.currentTarget.dataset.project);
+        displayProjectPage();
+        displayTask();
+      })
+    })    
+  }
+
+  return {
+    taskBtnListener,
+    displayCustomProjects,
+    displayTask,
+    displayProjectPage,
+    projectListener
+  };
 })();
 
 export default webInterface;
