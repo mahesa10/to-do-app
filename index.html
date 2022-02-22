@@ -36,7 +36,17 @@
     <div class="custom-project-container">
       <div class="custom-project-header">
         <h2>Projects</h2>
-        <button class="material-icons">add</button>
+        <button class="material-icons add-project">add</button>
+      </div>
+
+      <div class="custom-project-input">
+        <input type="text" id="custom-project-name">
+        <button class="btn-add-project">Add</button>
+        <button class="btn-cancel-add-project">Cancel</button>
+      </div>
+
+      <div class="custom-project-list">
+        
       </div>
 
       <!-- <div class="custom-project">
@@ -59,6 +69,7 @@
 
     <div class="add-task-input">
       <input type="text" name="task-title" id="task-title" required>
+      <input type="date" name="task-duedate" id="task-due-date">
       <textarea name="task-description" id="task-description" cols="30" rows="10"></textarea>
       <div class="add-task-btn">
         <button class="btn-add-task">Add Task</button>

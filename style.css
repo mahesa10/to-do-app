@@ -94,6 +94,25 @@ header .custom-project-header {
   background-color: gray;
 }
 
+.custom-project-input {
+  display: none;
+  grid-template-columns: repeat(2, 1fr);
+  padding: 0 24px;
+  gap: 4px;
+}
+
+input#custom-project-name {
+  grid-column: 1 / span 2;
+  font-family: inherit;
+  font-size: inherit;
+  padding: 8px;
+}
+
+.custom-project-input button {
+  padding: 6px 0;
+  font-family: inherit;
+}
+
 header .custom-project {
   font-weight: 500;
   padding: 8px 24px;
@@ -145,7 +164,7 @@ main .add-task:hover {
 
 main .add-task-input {
   display: none;
-  flex-direction: column;
+  grid-template-columns: 1fr 150px;
   gap: 8px;
   padding: 8px;
   margin-bottom: 16px;
@@ -163,19 +182,34 @@ main .add-task-input {
   outline: none;
 }
 
+.add-task-input #task-title {
+  grid-column: 1;
+}
+
+.add-task-input #task-duedate {
+  grid-column: 2;
+}
+
 .add-task-input textarea {
+  grid-column: 1 / span 2;
   resize: none;
 }
 
 .add-task-btn {
   display: flex;
   gap: 8px;
+  grid-column: 1 / span 2;
+  justify-self: start;
 }
 
 .add-task-btn button {
   font-family: inherit;
   font-size: inherit;
   padding: 6px 10px;
+}
+
+main .task-list {
+  overflow: auto;
 }
 
 main .task {
