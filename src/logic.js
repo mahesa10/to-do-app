@@ -19,14 +19,7 @@ const toDoList = (() => {
   const getActiveProjectName = () => activeProjectName;
 
   const getActiveProject = () => getProject(getActiveProjectName());
-
-  // const addInboxTask = (task) => getProject("Inbox").addTasktoProject(task);
-
-  // const addTodayTask = (task) => getProject("Today").addTasktoProject(task);
-
-  // const addThisWeekTask = (task) => getProject("This Week").addTasktoProject(task);
   
-
   return {
     addNewProject,
     getAllProjects,
