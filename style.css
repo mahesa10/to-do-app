@@ -218,6 +218,15 @@ main .task {
   padding: 8px;
   gap: 8px;
   width: 100%;
+  border-bottom: 1px solid lightgrey;
+}
+
+.task-checkbox {
+  cursor: pointer;
+}
+
+.btn-delete-task {
+  margin-left: auto;
   cursor: pointer;
 }
 
