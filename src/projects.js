@@ -8,6 +8,10 @@ export default class Project {
     this.tasks.push(task);
   }
 
+  removeTask(index) {
+    this.tasks.splice(index, 1);
+  }
+
   getProjectName() {
     return this.name;
   }

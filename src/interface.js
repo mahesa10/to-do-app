@@ -10,7 +10,7 @@ const webInterface = (() => {
     e.currentTarget.style.display = "none";
   }
 
-  const addTask = (projectName) => {
+  const addTasktoProject = (projectName) => {
     const taskTitle = document.querySelector("#task-title");
     const taskDesc = document.querySelector("#task-description");
     const taskDueDate = document.querySelector("#task-due-date");
@@ -61,20 +61,35 @@ const webInterface = (() => {
     let activeProject = toDoList.getActiveProject();
     let projectTasks = activeProject.getProjectTasks();
     projectTasks.forEach((task, index) => {
-      const taskLabel = document.createElement("label");
-      taskLabel.classList.add("task")
-      taskLabel.setAttribute("for", `task-${index}`);
+      const taskDiv = document.createElement("div");
+      taskDiv.classList.add("task")
 
-      const taskCheckbox = document.createElement("input");
-      taskCheckbox.setAttribute("type", "checkbox");
-      taskCheckbox.setAttribute("id", `task-${index}`);
+      const taskCheckbox = document.createElement("span");
+      taskCheckbox.className = "material-icons task-checkbox";
+      taskCheckbox.textContent = "check_box_outline_blank";
+      taskCheckbox.addEventListener("click", (e) => {
+        if (e.currentTarget.textContent === "check_box_outline_blank") {
+          e.currentTarget.textContent = "check_box";
+        } else {
+          e.currentTarget.textContent = "check_box_outline_blank";
+        }
+      })
 
       const taskTitle = document.createElement("p");
       taskTitle.textContent = task.getTaskTitle();
+
+      const taskDeleteBtn = document.createElement("span");
+      taskDeleteBtn.className = "material-icons btn-delete-task";
+      taskDeleteBtn.textContent = "delete_outline";
+      taskDeleteBtn.addEventListener("click", (e) => {
+        activeProject.removeTask(index);
+        e.currentTarget.parentElement.remove();
+      });
       
-      taskLabel.appendChild(taskCheckbox);
-      taskLabel.appendChild(taskTitle);
-      taskListDiv.appendChild(taskLabel);
+      taskDiv.appendChild(taskCheckbox);
+      taskDiv.appendChild(taskTitle);
+      taskDiv.appendChild(taskDeleteBtn);
+      taskListDiv.appendChild(taskDiv);
     })
   }
 
@@ -92,7 +107,7 @@ const webInterface = (() => {
 
     const addTaskBtn = document.querySelector(".btn-add-task");
     addTaskBtn.addEventListener("click", () => {
-      addTask(toDoList.getActiveProjectName());
+      addTasktoProject(toDoList.getActiveProjectName());
       displayTask();
       hideTaskInput();
     })
