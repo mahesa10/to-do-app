@@ -18,6 +18,10 @@ export default class Task {
     this.description = desc
   }
 
+  setCompleteStatus(isCompleted) {
+    this.isCompleted = isCompleted;
+  }
+
   getTaskTitle() {
     return this.title;
   }
@@ -28,5 +32,9 @@ export default class Task {
 
   getDueDate() {
     return this.dueDate;
+  }
+
+  getIsCompleted() {
+    return this.isCompleted;
   }
 }

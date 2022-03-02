@@ -68,10 +68,14 @@ const webInterface = (() => {
       taskCheckbox.className = "material-icons task-checkbox";
       taskCheckbox.textContent = "check_box_outline_blank";
       taskCheckbox.addEventListener("click", (e) => {
-        if (e.currentTarget.textContent === "check_box_outline_blank") {
+        if (task.getIsCompleted() === false) {
           e.currentTarget.textContent = "check_box";
+          task.setCompleteStatus(true);
+          e.currentTarget.parentElement.style.opacity = "0.3";
         } else {
           e.currentTarget.textContent = "check_box_outline_blank";
+          task.setCompleteStatus(false);
+          e.currentTarget.parentElement.style.opacity = "1";
         }
       })
 
