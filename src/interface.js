@@ -82,6 +82,10 @@ const webInterface = (() => {
       const taskTitle = document.createElement("p");
       taskTitle.textContent = task.getTaskTitle();
 
+      const taskDueDate = document.createElement("span");
+      taskDueDate.classList.add("task-due-date");
+      taskDueDate.textContent = task.getDueDate();
+
       const taskDeleteBtn = document.createElement("span");
       taskDeleteBtn.className = "material-icons btn-delete-task";
       taskDeleteBtn.textContent = "delete_outline";
@@ -91,7 +95,8 @@ const webInterface = (() => {
       });
       
       taskDiv.appendChild(taskCheckbox);
-      taskDiv.appendChild(taskTitle);
+      taskDiv.appendChild(taskTitle);      
+      taskDiv.appendChild(taskDueDate);      
       taskDiv.appendChild(taskDeleteBtn);
       taskListDiv.appendChild(taskDiv);
     })
