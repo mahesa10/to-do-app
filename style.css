@@ -225,8 +225,12 @@ main .task {
   cursor: pointer;
 }
 
-.btn-delete-task {
+.task-due-date {
   margin-left: auto;
+}
+
+.btn-delete-task {
+  /* margin-left: auto; */
   cursor: pointer;
 }
 
