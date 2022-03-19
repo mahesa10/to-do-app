@@ -20,6 +20,7 @@ body {
   grid-template-columns: 250px 1fr;
   grid-template-rows: 1fr 50px;
   font-family: 'Inter', sans-serif;
+  position: relative;
 }
 
 header {
@@ -162,35 +163,52 @@ main .add-task:hover {
   background-color: lightgrey;
 }
 
-main .add-task-input {
+main .task-modal-container {
   display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* background-color: rgba(128, 128, 128, 0.5); */
+  align-items: center;
+  justify-content: center;
+}
+
+main .task-input-modal {
+  display: grid;
   grid-template-columns: 1fr 150px;
   gap: 8px;
   padding: 8px;
   margin-bottom: 16px;
+  width: 40%;
+  padding: 16px;
+  border-radius: 16px;
+  background-color: grey;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
 
-.add-task-input input,
-.add-task-input textarea {
+.task-input-modal input,
+.task-input-modal textarea {
   font-family: inherit;
   font-size: inherit;
   padding: 4px;
 }
 
-.add-task-input input:focus,
-.add-task-input textarea:focus {
+.task-input-modal input:focus,
+.task-input-modal textarea:focus {
   outline: none;
 }
 
-.add-task-input #task-title {
+.task-input-modal #task-title {
   grid-column: 1;
 }
 
-.add-task-input #task-duedate {
+.task-input-modal #task-duedate {
   grid-column: 2;
 }
 
-.add-task-input textarea {
+.task-input-modal textarea {
   grid-column: 1 / span 2;
   resize: none;
 }
