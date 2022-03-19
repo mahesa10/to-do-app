@@ -40,7 +40,7 @@
       </div>
 
       <div class="custom-project-input">
-        <input type="text" id="custom-project-name">
+        <input type="text" id="custom-project-name" required>
         <button class="btn-add-project">Add</button>
         <button class="btn-cancel-add-project">Cancel</button>
       </div>
@@ -58,18 +58,19 @@
       <span class="material-icons md-18">add</span>
       <p>Add Task</p>
     </div>
-
-    <div class="add-task-input">
-      <input type="text" id="task-title" required>
-      <input type="date" id="task-due-date">
-      <textarea name="task-description" id="task-description" cols="30" rows="10"></textarea>
-      <div class="add-task-btn">
-        <button class="btn-add-task">Add Task</button>
-        <button class="btn-cancel-task">Cancel</button>
-      </div>
-    </div>
     
     <div class="task-list">
+    </div>
+    
+    <div class="task-modal-container">
+      <div class="task-input-modal">
+        <input type="text" id="task-title" placeholder="Title" required>
+        <input type="date" id="task-due-date">
+        <textarea name="task-description" id="task-description" cols="30" rows="10"  placeholder="Description"></textarea>
+        <div class="add-task-btn">
+          <button class="btn-add-task">Add Task</button>
+          <button class="btn-cancel-task">Cancel</button>
+      </div>
     </div>
   </main>
   

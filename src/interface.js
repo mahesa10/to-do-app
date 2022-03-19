@@ -4,10 +4,15 @@ import Project from "./projects";
 
 const webInterface = (() => {
 
-  const displayTaskField = (e) => {
-    const addTaskInput = document.querySelector(".add-task-input");
-    addTaskInput.style.display = "grid";
-    e.currentTarget.style.display = "none";
+  // const displayTaskField = (e) => {
+  //   const addTaskInput = document.querySelector(".add-task-input");
+  //   addTaskInput.style.display = "grid";
+  //   e.currentTarget.style.display = "none";
+  // }
+
+  const displayTaskModal = () => {
+    const taskInputModal = document.querySelector(".task-modal-container");
+    taskInputModal.style.display = "flex";
   }
 
   const addTasktoProject = (projectName) => {
@@ -19,6 +24,10 @@ const webInterface = (() => {
     task.setDueDate(taskDueDate.value);
     const project = toDoList.getProject(projectName);
     project.addTask(task);
+
+    taskTitle.value = "";
+    taskDesc.value = "";
+    taskDueDate.value = "";
   }
 
   const addProject = (projectName) => {
@@ -26,11 +35,16 @@ const webInterface = (() => {
     toDoList.addNewProject(newProject);
   }
 
-  const hideTaskInput = () => {
-    const addTaskInput = document.querySelector(".add-task-input");
-    const addTaskInputBtn = document.querySelector(".add-task");
-    addTaskInput.style.display = "none";
-    addTaskInputBtn.style.display = "flex";
+  // const hideTaskInput = () => {
+  //   const addTaskInput = document.querySelector(".add-task-input");
+  //   const addTaskInputBtn = document.querySelector(".add-task");
+  //   addTaskInput.style.display = "none";
+  //   addTaskInputBtn.style.display = "flex";
+  // }
+
+  const hideTaskModal = () => {
+    const taskInputModal = document.querySelector(".task-modal-container");
+    taskInputModal.style.display = "none";
   }
 
   const displayCustomProjects = () => {
@@ -64,6 +78,9 @@ const webInterface = (() => {
       const taskDiv = document.createElement("div");
       taskDiv.classList.add("task")
 
+      const taskTitle = document.createElement("p");
+      taskTitle.textContent = task.getTaskTitle();
+
       const taskCheckbox = document.createElement("span");
       taskCheckbox.className = "material-icons task-checkbox";
       taskCheckbox.textContent = "check_box_outline_blank";
@@ -72,15 +89,14 @@ const webInterface = (() => {
           e.currentTarget.textContent = "check_box";
           task.setCompleteStatus(true);
           e.currentTarget.parentElement.style.opacity = "0.3";
+          taskTitle.style.textDecoration = "line-through";
         } else {
           e.currentTarget.textContent = "check_box_outline_blank";
           task.setCompleteStatus(false);
           e.currentTarget.parentElement.style.opacity = "1";
+          taskTitle.style.textDecoration = "none";
         }
       })
-
-      const taskTitle = document.createElement("p");
-      taskTitle.textContent = task.getTaskTitle();
 
       const taskDueDate = document.createElement("span");
       taskDueDate.classList.add("task-due-date");
@@ -109,16 +125,16 @@ const webInterface = (() => {
 
   const taskBtnListener = () => {
     const addTaskInputBtn = document.querySelector(".add-task");
-    addTaskInputBtn.addEventListener("click", displayTaskField);
+    addTaskInputBtn.addEventListener("click", displayTaskModal);
 
     const cancelAddTaskBtn = document.querySelector(".btn-cancel-task");
-    cancelAddTaskBtn.addEventListener("click", hideTaskInput);
+    cancelAddTaskBtn.addEventListener("click", hideTaskModal);
 
     const addTaskBtn = document.querySelector(".btn-add-task");
     addTaskBtn.addEventListener("click", () => {
       addTasktoProject(toDoList.getActiveProjectName());
       displayTask();
-      hideTaskInput();
+      hideTaskModal();
     })
   }
   
