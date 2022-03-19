@@ -4,12 +4,6 @@ import Project from "./projects";
 
 const webInterface = (() => {
 
-  // const displayTaskField = (e) => {
-  //   const addTaskInput = document.querySelector(".add-task-input");
-  //   addTaskInput.style.display = "grid";
-  //   e.currentTarget.style.display = "none";
-  // }
-
   const displayTaskModal = () => {
     const taskInputModal = document.querySelector(".task-modal-container");
     taskInputModal.style.display = "flex";
@@ -34,13 +28,6 @@ const webInterface = (() => {
     const newProject = new Project(projectName);
     toDoList.addNewProject(newProject);
   }
-
-  // const hideTaskInput = () => {
-  //   const addTaskInput = document.querySelector(".add-task-input");
-  //   const addTaskInputBtn = document.querySelector(".add-task");
-  //   addTaskInput.style.display = "none";
-  //   addTaskInputBtn.style.display = "flex";
-  // }
 
   const hideTaskModal = () => {
     const taskInputModal = document.querySelector(".task-modal-container");
