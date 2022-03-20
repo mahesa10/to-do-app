@@ -13,15 +13,23 @@ const webInterface = (() => {
     const taskTitle = document.querySelector("#task-title");
     const taskDesc = document.querySelector("#task-description");
     const taskDueDate = document.querySelector("#task-due-date");
+    const project = toDoList.getProject(projectName);
+    const projectTasks = project.getProjectTasks();
+
+    if (projectTasks.some(task => task.title === taskTitle.value)) {
+      alert("Task already exists!");
+      return false;
+    }
     const task = new Task(taskTitle.value);
     task.setDescription(taskDesc.value);
     task.setDueDate(taskDueDate.value);
-    const project = toDoList.getProject(projectName);
     project.addTask(task);
 
     taskTitle.value = "";
     taskDesc.value = "";
     taskDueDate.value = "";
+
+    return true;
   }
 
   const addProject = (projectName) => {
@@ -119,9 +127,11 @@ const webInterface = (() => {
 
     const addTaskBtn = document.querySelector(".btn-add-task");
     addTaskBtn.addEventListener("click", () => {
-      addTasktoProject(toDoList.getActiveProjectName());
-      displayTask();
-      hideTaskModal();
+      const activeProjectName = toDoList.getActiveProjectName();
+      if (addTasktoProject(activeProjectName)) {
+        displayTask();
+        hideTaskModal();
+      }
     })
   }
   
