@@ -4,11 +4,6 @@ import Project from "./projects";
 
 const webInterface = (() => {
 
-  const displayTaskModal = () => {
-    const taskInputModal = document.querySelector(".task-modal-container");
-    taskInputModal.style.display = "flex";
-  }
-
   const addTasktoProject = (projectName) => {
     const taskTitle = document.querySelector("#task-title");
     const taskDesc = document.querySelector("#task-description");
@@ -35,11 +30,6 @@ const webInterface = (() => {
   const addProject = (projectName) => {
     const newProject = new Project(projectName);
     toDoList.addNewProject(newProject);
-  }
-
-  const hideTaskModal = () => {
-    const taskInputModal = document.querySelector(".task-modal-container");
-    taskInputModal.style.display = "none";
   }
 
   const displayCustomProjects = () => {
@@ -115,6 +105,11 @@ const webInterface = (() => {
       taskDueDate.classList.add("task-due-date");
       taskDueDate.textContent = task.getDueDate();
 
+      const taskEditBtn = document.createElement("span");
+      taskEditBtn.className = "material-icons-outlined btn-edit-task";
+      taskEditBtn.textContent = "edit";
+      taskEditBtn.addEventListener("click", () => displayTaskModal("edit", task));
+
       const taskDeleteBtn = document.createElement("span");
       taskDeleteBtn.className = "material-icons btn-delete-task";
       taskDeleteBtn.textContent = "delete_outline";
@@ -125,10 +120,79 @@ const webInterface = (() => {
       
       taskDiv.appendChild(taskCheckbox);
       taskDiv.appendChild(taskTitle);      
-      taskDiv.appendChild(taskDueDate);      
+      taskDiv.appendChild(taskDueDate);
+      taskDiv.appendChild(taskEditBtn);
       taskDiv.appendChild(taskDeleteBtn);
       taskListDiv.appendChild(taskDiv);
     })
+  }
+
+  const updateTaskDisplay = (task) => {
+    const taskTitleDisplay = document.querySelector(".task-title-btn");
+    const taskDateDisplay = document.querySelector(".task-due-date");
+    taskTitleDisplay.textContent = task.getTitle();
+    taskDateDisplay.textContent = task.getDueDate();
+  }
+
+  const hideTaskModal = () => {
+    const taskInputModal = document.querySelector(".task-modal-container");
+    taskInputModal.style.display = "none";
+
+    const taskTitle = document.querySelector("#task-title");
+    const taskDesc = document.querySelector("#task-description");
+    const taskDueDate = document.querySelector("#task-due-date");
+
+    taskTitle.value = "";
+    taskDesc.value = "";
+    taskDueDate.value = "";
+  }
+  
+  const displayTaskModal = (modalType, task) => {
+    const inputTaskBtn = document.querySelector(".input-task-btn");
+    inputTaskBtn.textContent = "";
+
+    const cancelAddTaskBtn = document.createElement("button");
+    cancelAddTaskBtn.classList.add("btn-cancel-task");
+    cancelAddTaskBtn.textContent = "Cancel"
+    cancelAddTaskBtn.addEventListener("click", hideTaskModal);
+
+    const submitTaskBtn = document.createElement("button");
+
+    if (modalType === "add") {
+      submitTaskBtn.textContent = "Add Task";
+      submitTaskBtn.classList.add("btn-edit-task");
+      submitTaskBtn.addEventListener("click", () => {
+        const activeProjectName = toDoList.getActiveProjectName();
+        if (addTasktoProject(activeProjectName)) {
+          displayTask();
+          hideTaskModal();
+        }
+      })
+    } else if (modalType === "edit") {
+      const taskTitle = document.querySelector("#task-title");
+      const taskDesc = document.querySelector("#task-description");
+      const taskDueDate = document.querySelector("#task-due-date");
+
+      taskTitle.value = task.getTitle();
+      taskDesc.value = task.getDescription();
+      taskDueDate.value = task.getDueDate();
+      submitTaskBtn.textContent = "Edit Task";
+      submitTaskBtn.classList.add("btn-edit-task");
+
+      submitTaskBtn.addEventListener("click", () => {
+        task.setTitle(taskTitle.value);
+        task.setDueDate(taskDueDate.value);
+        task.setDescription(taskDesc.value);
+        updateTaskDisplay(task);
+        hideTaskModal();
+      })
+    }
+
+    inputTaskBtn.appendChild(submitTaskBtn);
+    inputTaskBtn.appendChild(cancelAddTaskBtn);
+    
+    const taskInputModal = document.querySelector(".task-modal-container");
+    taskInputModal.style.display = "flex";
   }
 
   const displayProjectPage = () => {
@@ -138,19 +202,7 @@ const webInterface = (() => {
 
   const taskBtnListener = () => {
     const addTaskInputBtn = document.querySelector(".add-task");
-    addTaskInputBtn.addEventListener("click", displayTaskModal);
-
-    const cancelAddTaskBtn = document.querySelector(".btn-cancel-task");
-    cancelAddTaskBtn.addEventListener("click", hideTaskModal);
-
-    const addTaskBtn = document.querySelector(".btn-add-task");
-    addTaskBtn.addEventListener("click", () => {
-      const activeProjectName = toDoList.getActiveProjectName();
-      if (addTasktoProject(activeProjectName)) {
-        displayTask();
-        hideTaskModal();
-      }
-    })
+    addTaskInputBtn.addEventListener("click", () => displayTaskModal("add"));
   }
   
   const projectListener = () => {

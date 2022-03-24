@@ -6,7 +6,7 @@ export default class Task {
     this.description = description;
   }
 
-  setTaskTitle(title) {
+  setTitle(title) {
     this.title = title;
   }
 
