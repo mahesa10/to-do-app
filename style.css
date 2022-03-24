@@ -213,14 +213,14 @@ main .task-input-modal {
   resize: none;
 }
 
-.add-task-btn {
+.input-task-btn {
   display: flex;
   gap: 8px;
   grid-column: 1 / span 2;
   justify-self: start;
 }
 
-.add-task-btn button {
+.input-task-btn button {
   font-family: inherit;
   font-size: inherit;
   padding: 6px 10px;
@@ -255,6 +255,7 @@ main .task {
   margin-left: auto;
 }
 
+.btn-edit-task,
 .btn-delete-task {
   cursor: pointer;
 }
