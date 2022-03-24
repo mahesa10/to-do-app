@@ -1,5 +1,5 @@
 export default class Task {
-  constructor(title, dueDate = "No date", isCompleted = false, description = "") {
+  constructor(title, dueDate = "No date", isCompleted = false, description = "-") {
     this.title = title;
     this.dueDate = dueDate;
     this.isCompleted = isCompleted;
@@ -22,11 +22,11 @@ export default class Task {
     this.isCompleted = isCompleted;
   }
 
-  getTaskTitle() {
+  getTitle() {
     return this.title;
   }
 
-  getTaskDescription() {
+  getDescription() {
     return this.description;
   }
 

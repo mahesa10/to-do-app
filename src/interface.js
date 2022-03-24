@@ -14,7 +14,7 @@ const webInterface = (() => {
     const taskDesc = document.querySelector("#task-description");
     const taskDueDate = document.querySelector("#task-due-date");
     const project = toDoList.getProject(projectName);
-    const projectTasks = project.getProjectTasks();
+    const projectTasks = project.getAllTasks();
 
     if (projectTasks.some(task => task.title === taskTitle.value)) {
       alert("Task already exists!");
@@ -64,17 +64,35 @@ const webInterface = (() => {
     }
   }
 
+  const displayTaskDetail = (task) => {
+    const taskDetailModal = document.querySelector(".task-detail-modal");
+    const taskDetailTitle = document.querySelector(".task-detail-title");
+    const taskDetailDate = document.querySelector(".task-detail-date");
+    const taskDetailDesc = document.querySelector(".task-detail-desc");
+    const taskDetailClose = document.querySelector(".task-detail-close");
+
+    taskDetailTitle.textContent = task.getTitle();
+    taskDetailDate.textContent = task.getDueDate();
+    taskDetailDesc.textContent = task.getDescription();
+
+    taskDetailClose.addEventListener("click", () => taskDetailModal.style.display = "none");
+
+    taskDetailModal.style.display = "flex";
+  }
+
   const displayTask = () => {
     const taskListDiv = document.querySelector(".task-list");
     taskListDiv.textContent = "";
     let activeProject = toDoList.getActiveProject();
-    let projectTasks = activeProject.getProjectTasks();
+    let projectTasks = activeProject.getAllTasks();
     projectTasks.forEach((task, index) => {
       const taskDiv = document.createElement("div");
       taskDiv.classList.add("task")
 
       const taskTitle = document.createElement("p");
-      taskTitle.textContent = task.getTaskTitle();
+      taskTitle.textContent = task.getTitle();
+      taskTitle.classList.add("task-title-btn")
+      taskTitle.addEventListener("click", () => displayTaskDetail(task))
 
       const taskCheckbox = document.createElement("span");
       taskCheckbox.className = "material-icons task-checkbox";
