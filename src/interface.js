@@ -20,6 +20,12 @@ const webInterface = (() => {
     task.setDueDate(taskDueDate.value);
     project.addTask(task);
 
+    const todayCheck = toDoList.checkIsToday(taskDueDate.value);
+    if (todayCheck) toDoList.addTodayTask(task);
+
+    const thisWeekCheck = toDoList.checkThisWeek(taskDueDate.value);
+    if (thisWeekCheck) toDoList.addThisWeekTask(task);
+
     taskTitle.value = "";
     taskDesc.value = "";
     taskDueDate.value = "";
@@ -75,7 +81,7 @@ const webInterface = (() => {
     taskListDiv.textContent = "";
     let activeProject = toDoList.getActiveProject();
     let projectTasks = activeProject.getAllTasks();
-    projectTasks.forEach((task, index) => {
+    projectTasks.forEach(task => {
       const taskDiv = document.createElement("div");
       taskDiv.classList.add("task")
 
@@ -114,7 +120,7 @@ const webInterface = (() => {
       taskDeleteBtn.className = "material-icons btn-delete-task";
       taskDeleteBtn.textContent = "delete_outline";
       taskDeleteBtn.addEventListener("click", (e) => {
-        activeProject.removeTask(index);
+        toDoList.removeTaskfromProject(task.id);
         e.currentTarget.parentElement.remove();
       });
       
@@ -205,13 +211,29 @@ const webInterface = (() => {
     addTaskInputBtn.addEventListener("click", () => displayTaskModal("add"));
   }
   
+  const displayInputTaskBtn = () => {
+    const addTaskInputBtn = document.querySelector(".add-task");
+    addTaskInputBtn.style.display = "flex";
+  }
+
+  const hideInputTaskBtn = () => {
+    const addTaskInputBtn = document.querySelector(".add-task");
+    addTaskInputBtn.style.display = "none";
+  }
+
   const projectListener = () => {
     const projectNav = document.querySelectorAll(".project");
     projectNav.forEach(project => {
       project.addEventListener("click", (e) => {
-        toDoList.setActiveProjectName(e.currentTarget.dataset.project);
+        let projectName = e.currentTarget.dataset.project;
+        toDoList.setActiveProjectName(projectName);
         displayProjectPage();
         displayTask();
+        if (projectName === "Today" || projectName === "This Week") {
+          hideInputTaskBtn();
+        } else {
+          displayInputTaskBtn();
+        }
       });
     });
 

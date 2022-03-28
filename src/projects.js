@@ -8,10 +8,6 @@ export default class Project {
     this.tasks.push(task);
   }
 
-  removeTask(index) {
-    this.tasks.splice(index, 1);
-  }
-
   getProjectName() {
     return this.name;
   }
@@ -20,7 +16,20 @@ export default class Project {
     return this.tasks.find(task => task.name === name);
   }
 
+  getTaskByID(id) {
+    return this.tasks.find(task => task.id === id);
+  }
+
   getAllTasks() {
     return this.tasks;
+  }
+
+  checkTask(id) {
+    return this.tasks.some(task => task.id === id);
+  }
+
+  removeTask(id) {
+    let filteredTasks = this.tasks.filter(task => task.id !== id);
+    this.tasks = filteredTasks;
   }
 }

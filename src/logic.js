@@ -1,4 +1,5 @@
 import Project from "./projects";
+import { format, parse, isThisWeek } from 'date-fns';
 
 const toDoList = (() => {
   let projectList = [];
@@ -19,6 +20,32 @@ const toDoList = (() => {
   const getActiveProjectName = () => activeProjectName;
 
   const getActiveProject = () => getProject(getActiveProjectName());
+
+  const checkIsToday = (date) => {
+    const todayDate = format(new Date(), 'yyyy-MM-dd');
+    return date === todayDate;
+  }
+
+  const addTodayTask = (task) => {
+    const todayProject = getProject("Today");
+    todayProject.addTask(task);
+  }
+
+  const checkThisWeek = (date) => {
+    const convertedDate = parse(date, 'yyyy-MM-dd', new Date());
+    return isThisWeek(convertedDate);
+  }
+
+  const addThisWeekTask = (task) => {
+    const thisWeekProject = getProject("This Week");
+    thisWeekProject.addTask(task);
+  }
+
+  const removeTaskfromProject = (id) => {
+    projectList.forEach(project => {
+      if (project.checkTask(id)) project.removeTask(id);
+    })
+  }
   
   return {
     addNewProject,
@@ -26,7 +53,12 @@ const toDoList = (() => {
     getProject,
     setActiveProjectName,
     getActiveProjectName,
-    getActiveProject
+    getActiveProject,
+    checkIsToday,
+    addTodayTask,
+    checkThisWeek,
+    addThisWeekTask,
+    removeTaskfromProject
   };
 })();
 
