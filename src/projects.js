@@ -32,4 +32,8 @@ export default class Project {
     let filteredTasks = this.tasks.filter(task => task.id !== id);
     this.tasks = filteredTasks;
   }
+
+  clearTask() {
+    this.tasks = [];
+  }
 }

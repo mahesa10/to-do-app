@@ -8,12 +8,16 @@ export default class Task {
   }
 
   static generateId() {
-    if (!this.latestID) {
-      this.latestID = 1
+    if (!this.latestId) {
+      this.latestId = 1
     } else {
-      this.latestID++
+      this.latestId++
     }
-    return this.latestID;
+    return this.latestId;
+  }
+
+  static setLatestId(id) {
+    this.latestId = id
   }
 
   setTitle(title) {

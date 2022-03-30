@@ -1,6 +1,7 @@
 import Task from "./task";
 import toDoList from "./logic";
 import Project from "./projects";
+import storage from "./storage";
 
 const webInterface = (() => {
 
@@ -25,6 +26,8 @@ const webInterface = (() => {
 
     const thisWeekCheck = toDoList.checkThisWeek(taskDueDate.value);
     if (thisWeekCheck) toDoList.addThisWeekTask(task);
+
+    storage.addData();
 
     taskTitle.value = "";
     taskDesc.value = "";
@@ -84,6 +87,7 @@ const webInterface = (() => {
     projectTasks.forEach(task => {
       const taskDiv = document.createElement("div");
       taskDiv.classList.add("task")
+      taskDiv.setAttribute("id", `task-${task.id}`);
 
       const taskTitle = document.createElement("p");
       taskTitle.textContent = task.getTitle();
@@ -122,6 +126,7 @@ const webInterface = (() => {
       taskDeleteBtn.addEventListener("click", (e) => {
         toDoList.removeTaskfromProject(task.id);
         e.currentTarget.parentElement.remove();
+        storage.addData();
       });
       
       taskDiv.appendChild(taskCheckbox);
@@ -134,8 +139,9 @@ const webInterface = (() => {
   }
 
   const updateTaskDisplay = (task) => {
-    const taskTitleDisplay = document.querySelector(".task-title-btn");
-    const taskDateDisplay = document.querySelector(".task-due-date");
+    const taskDisplay = document.querySelector(`#task-${task.id}`)
+    const taskTitleDisplay = taskDisplay.querySelector(".task-title-btn");
+    const taskDateDisplay = taskDisplay.querySelector(".task-due-date");
     taskTitleDisplay.textContent = task.getTitle();
     taskDateDisplay.textContent = task.getDueDate();
   }
@@ -185,12 +191,13 @@ const webInterface = (() => {
       submitTaskBtn.textContent = "Edit Task";
       submitTaskBtn.classList.add("btn-edit-task");
 
-      submitTaskBtn.addEventListener("click", () => {
+      submitTaskBtn.addEventListener("click", (e) => {
         task.setTitle(taskTitle.value);
         task.setDueDate(taskDueDate.value);
         task.setDescription(taskDesc.value);
         updateTaskDisplay(task);
         hideTaskModal();
+        storage.addData();
       })
     }
 
@@ -250,6 +257,7 @@ const webInterface = (() => {
       addProject(projectNameInput.value);
       displayCustomProjects();
       customProjectInput.style.display = "none";
+      storage.addData();
     })
 
     const cancelAddProjectBtn = document.querySelector(".btn-cancel-add-project");
@@ -264,6 +272,8 @@ const webInterface = (() => {
     projectListener();
     displayProjectPage();
     displayTask();
+
+    console.log(storage.getData())
   }
 
   return {

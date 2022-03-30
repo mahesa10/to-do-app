@@ -1,5 +1,6 @@
 import Project from "./projects";
 import { format, parse, isThisWeek } from 'date-fns';
+import storage from "./storage";
 
 const toDoList = (() => {
   let projectList = [];
@@ -7,11 +8,15 @@ const toDoList = (() => {
   projectList.push(new Project("Today"));
   projectList.push(new Project("This Week"));
 
+  if (storage.getData()) {
+    projectList = storage.getData();
+  }
+
   let activeProjectName = "Inbox";
 
   const addNewProject = (project) => projectList.push(project);
 
-  const getAllProjects = () => projectList;
+  const getAllProjects = () => projectList
 
   const getProject = (name) => projectList.find(el => el.name == name);
 
