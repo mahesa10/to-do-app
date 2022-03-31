@@ -27,7 +27,7 @@ const webInterface = (() => {
     const thisWeekCheck = toDoList.checkThisWeek(taskDueDate.value);
     if (thisWeekCheck) toDoList.addThisWeekTask(task);
 
-    storage.addData();
+    storage.saveData();
 
     taskTitle.value = "";
     taskDesc.value = "";
@@ -41,23 +41,42 @@ const webInterface = (() => {
     toDoList.addNewProject(newProject);
   }
 
+  // const removeProjectDisplay = (projectDisplay) => {
+    
+  // }
+
   const displayCustomProjects = () => {
     let projectList = toDoList.getAllProjects();
     const customProjectList = document.querySelector(".custom-project-list");
     customProjectList.textContent = "";
     if (projectList.length > 3) {
       for (let i = 3; i < projectList.length; i++) {
+        const projectName = projectList[i].getProjectName();
         const customProject = document.createElement("div");
         customProject.className = "project custom-project";
-        customProject.setAttribute("data-project", `${projectList[i].name}`);
+        customProject.setAttribute("data-project", `${projectName}`);
+
         const customProjectName = document.createElement("p");
-        customProjectName.textContent = projectList[i].name
+        customProjectName.textContent = projectList[i].name;
+
+        const deleteProjectBtn = document.createElement("span");
+        deleteProjectBtn.className = "material-icons btn-delete-project";
+        deleteProjectBtn.textContent = "delete_outline";
+        deleteProjectBtn.addEventListener("click", (e) => {
+          toDoList.deleteProject(projectName);
+          customProject.remove();
+          storage.saveData();
+          e.stopPropagation();
+        })
+
         customProject.appendChild(customProjectName);
+        customProject.appendChild(deleteProjectBtn);
         customProject.addEventListener("click", (e) => {
           toDoList.setActiveProjectName(e.currentTarget.dataset.project);
-          displayProjectPage();
+          displayProjectPage(e.currentTarget.dataset.project);
           displayTask();
         })
+
         customProjectList.appendChild(customProject);
       }
     }
@@ -126,7 +145,7 @@ const webInterface = (() => {
       taskDeleteBtn.addEventListener("click", (e) => {
         toDoList.removeTaskfromProject(task.id);
         e.currentTarget.parentElement.remove();
-        storage.addData();
+        storage.saveData();
       });
       
       taskDiv.appendChild(taskCheckbox);
@@ -197,7 +216,7 @@ const webInterface = (() => {
         task.setDescription(taskDesc.value);
         updateTaskDisplay(task);
         hideTaskModal();
-        storage.addData();
+        storage.saveData();
       })
     }
 
@@ -208,9 +227,43 @@ const webInterface = (() => {
     taskInputModal.style.display = "flex";
   }
 
-  const displayProjectPage = () => {
+  const editProjectField = () => {
     const projectTitle = document.querySelector(".project-title");
-    projectTitle.textContent = toDoList.getActiveProjectName();
+    const inputEditProject = document.createElement("input");
+    const activeProject = toDoList.getActiveProject();
+
+    inputEditProject.setAttribute("type", "text");
+    inputEditProject.className = "input-edit-project";
+    inputEditProject.addEventListener("keyup", (e) => {
+      if (e.key === "Enter") {
+        const newProjectName = inputEditProject.value
+        activeProject.setName(newProjectName);
+        projectTitle.textContent = "";
+        displayCustomProjects();
+        displayProjectPage(newProjectName);
+        storage.saveData()
+      }
+    })
+
+    projectTitle.textContent = "";
+    projectTitle.appendChild(inputEditProject);
+  }
+
+  const displayProjectPage = (projectName) => {
+    const projectTitle = document.querySelector(".project-title");
+    const defaultProject = ["Inbox", "Today", "This Week"];
+
+    projectTitle.textContent = projectName;
+    
+    if (!defaultProject.some(project => project === projectName)) {
+      const editProjectBtn = document.createElement("span");
+      editProjectBtn.className = "material-icons-outlined btn-edit-project"
+      editProjectBtn.textContent = "edit"
+      editProjectBtn.addEventListener("click", () => {
+        editProjectField();
+      })
+      projectTitle.appendChild(editProjectBtn);
+    }
   }
 
   const taskBtnListener = () => {
@@ -234,7 +287,7 @@ const webInterface = (() => {
       project.addEventListener("click", (e) => {
         let projectName = e.currentTarget.dataset.project;
         toDoList.setActiveProjectName(projectName);
-        displayProjectPage();
+        displayProjectPage(projectName);
         displayTask();
         if (projectName === "Today" || projectName === "This Week") {
           hideInputTaskBtn();
@@ -257,7 +310,7 @@ const webInterface = (() => {
       addProject(projectNameInput.value);
       displayCustomProjects();
       customProjectInput.style.display = "none";
-      storage.addData();
+      storage.saveData();
     })
 
     const cancelAddProjectBtn = document.querySelector(".btn-cancel-add-project");
@@ -270,10 +323,8 @@ const webInterface = (() => {
     taskBtnListener();
     displayCustomProjects();
     projectListener();
-    displayProjectPage();
+    displayProjectPage("Inbox");
     displayTask();
-
-    console.log(storage.getData())
   }
 
   return {

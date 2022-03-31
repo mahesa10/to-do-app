@@ -8,6 +8,10 @@ export default class Project {
     this.tasks.push(task);
   }
 
+  setName(newName) {
+    this.name = newName;
+  }
+
   getProjectName() {
     return this.name;
   }

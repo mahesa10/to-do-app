@@ -51,6 +51,11 @@ const toDoList = (() => {
       if (project.checkTask(id)) project.removeTask(id);
     })
   }
+
+  const deleteProject = (projectName) => {
+    let currentProjectList = getAllProjects();
+    projectList = currentProjectList.filter(project => project.getProjectName() !== projectName)
+  }
   
   return {
     addNewProject,
@@ -63,7 +68,8 @@ const toDoList = (() => {
     addTodayTask,
     checkThisWeek,
     addThisWeekTask,
-    removeTaskfromProject
+    removeTaskfromProject,
+    deleteProject
   };
 })();
 

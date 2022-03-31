@@ -3,7 +3,7 @@ import Project from "./projects";
 import Task from "./task";
 
 const storage = (() => {
-  const addData = () => {
+  const saveData = () => {
     let projectList = toDoList.getAllProjects();
     localStorage.setItem('toDoList', JSON.stringify(projectList)); 
   }
@@ -29,7 +29,7 @@ const storage = (() => {
   }
 
   return {
-    addData,
+    saveData,
     getData
   };
 })();
