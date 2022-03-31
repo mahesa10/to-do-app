@@ -118,6 +118,9 @@ header .custom-project {
   font-weight: 500;
   padding: 8px 24px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 header .custom-project:hover {
@@ -147,6 +150,13 @@ main {
 main .project-title {
   font-size: 1.75rem;
   margin-bottom: 32px;
+  display: flex;
+  align-items: center;
+}
+
+.project-title .btn-edit-project {
+  margin-left: 8px;
+  cursor: pointer;
 }
 
 main .add-task {
