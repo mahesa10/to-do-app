@@ -30,6 +30,8 @@ header {
   display: flex;
   flex-direction: column;
   gap: 32px;
+  background-color: #131F53;
+  color: #ffffff;
 }
 
 header .logo {
@@ -48,6 +50,7 @@ h2 {
 header .default-project-container {
   display: flex;
   flex-direction: column;
+  color: rgba(255,255,255,0.9);
 }
 
 header .default-project {
@@ -62,7 +65,7 @@ header .default-project {
 }
 
 header .default-project:hover {
-  background-color: gray;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 header .custom-project-container {
@@ -89,29 +92,75 @@ header .custom-project-header {
   width: 30px;
   height: 30px;
   border-radius: 4px;
+  color: #ffffff;
 }
 
 .custom-project-header button:hover {
-  background-color: gray;
+  background-color: rgba(0, 0, 0, 0.5);
+
 }
 
-.custom-project-input {
+.add-project-modal {
   display: none;
-  grid-template-columns: repeat(2, 1fr);
-  padding: 0 24px;
-  gap: 4px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  justify-content: center;
+  align-items: center;
+}
+
+.add-project-container {
+  background-color: #fff;
+  color: #000000;
+  width: 500px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border-radius: 8px;
+}
+
+.add-project-container h3 {
+  margin: 0;
+  font-size: 1.5rem;
 }
 
 input#custom-project-name {
-  grid-column: 1 / span 2;
   font-family: inherit;
   font-size: inherit;
   padding: 8px;
+  margin-top: 16px;
+  border: 1px solid #d3d3d3;
+  border-radius: 6px;
 }
 
-.custom-project-input button {
-  padding: 6px 0;
+input#custom-project-name:focus {
+  outline: none;
+  border: 1px solid #131F53;
+}
+
+.input-project-btn button {
+  padding: 8px 12px;
   font-family: inherit;
+  border: 1px solid lightgray;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.submit-project-btn {
+  background-color: #131F53;
+  color: #ffffff;
+}
+
+.cancel-submit-project {
+  background-color: #ffffff;
+}
+
+.cancel-submit-project:hover {
+  background-color: #f2f2f2;
 }
 
 header .custom-project {
@@ -121,11 +170,16 @@ header .custom-project {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  color: rgba(255,255,255,0.9);
 }
 
 header .custom-project:hover {
-  background-color: gray;
+  background-color: rgba(0, 0, 0, 0.5);
   border-radius: 4px;
+}
+
+header .active-project {  
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .material-icons.md-18 { font-size: 18px; }
@@ -145,6 +199,7 @@ main {
   padding: 32px 48px;
   display: flex;
   flex-direction: column;
+  color: #191919;
 }
 
 main .project-title {
@@ -159,6 +214,11 @@ main .project-title {
   cursor: pointer;
 }
 
+.input-edit-project {
+  font-size: 1.75rem;
+  font-family: inherit;
+}
+
 main .add-task {
   display: flex;
   align-items: center;
@@ -170,10 +230,10 @@ main .add-task {
 }
 
 main .add-task:hover {
-  background-color: lightgrey;
+  background-color: rgb(19, 31, 83, 0.05);
 }
 
-main .task-modal-container {
+main .task-input-modal {
   display: none;
   position: absolute;
   top: 0;
@@ -184,41 +244,43 @@ main .task-modal-container {
   justify-content: center;
 }
 
-main .task-input-modal {
+main .task-input-container {
   display: grid;
-  grid-template-columns: 1fr 150px;
+  grid-template-columns: 1fr 120px;
   gap: 8px;
   padding: 8px;
   margin-bottom: 16px;
   width: 40%;
   padding: 16px;
   border-radius: 16px;
-  background-color: grey;
+  background-color: #ffffff;
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
 
-.task-input-modal input,
-.task-input-modal textarea {
+.task-input-container input,
+.task-input-container textarea {
   font-family: inherit;
   font-size: inherit;
   padding: 4px;
   border-radius: 4px;
+  border: none;
 }
 
-.task-input-modal input:focus,
-.task-input-modal textarea:focus {
+.task-input-container input:focus,
+.task-input-container textarea:focus {
   outline: none;
 }
 
-.task-input-modal #task-title {
+.task-input-container #task-title {
   grid-column: 1;
+  font-weight: 600;
 }
 
-.task-input-modal #task-duedate {
+.task-input-container #task-duedate {
   grid-column: 2;
 }
 
-.task-input-modal textarea {
+.task-input-container textarea {
   grid-column: 1 / span 2;
   resize: none;
 }
@@ -233,7 +295,24 @@ main .task-input-modal {
 .input-task-btn button {
   font-family: inherit;
   font-size: inherit;
-  padding: 6px 10px;
+  padding: 8px 16px;
+  border: 1px solid lightgray;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.input-task-btn .btn-add-task,
+.input-task-btn .btn-edit-task {
+  background-color: #131F53;
+  color: #ffffff;
+}
+
+.input-task-btn .btn-cancel-task {
+  background-color: #ffffff;
+}
+
+.input-task-btn .btn-cancel-task:hover {
+  background-color: #f2f2f2;
 }
 
 main .task-list {
@@ -271,7 +350,7 @@ main .task {
 }
 
 main .task:hover {
-  background-color: lightgray;
+  background-color: rgb(19, 31, 83, 0.05);
   border-radius: 4px;
 }
 
@@ -315,9 +394,14 @@ main .task-detail-modal {
 
 footer {
   grid-column: 1 / span 2;
-  background-color: gray;
+  background-color: hsl(229, 63%, 10%);
   display: flex;
   justify-content: center;
   align-items: center;
   font-weight: 500;
+  color: #ffffff;
+}
+
+footer a {
+  color: #ffffff;
 }
