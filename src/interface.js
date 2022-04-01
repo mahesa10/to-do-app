@@ -41,9 +41,12 @@ const webInterface = (() => {
     toDoList.addNewProject(newProject);
   }
 
-  // const removeProjectDisplay = (projectDisplay) => {
-    
-  // }
+  const setActiveClass = (projectName) => {
+    const activeProjectNav = document.querySelector(".active-project");
+    const projectNav = document.querySelector(`[data-project="${projectName}"]`)
+    if (activeProjectNav !== null) activeProjectNav.classList.remove("active-project");
+    projectNav.classList.add("active-project");
+  }
 
   const displayCustomProjects = () => {
     let projectList = toDoList.getAllProjects();
@@ -63,10 +66,21 @@ const webInterface = (() => {
         deleteProjectBtn.className = "material-icons btn-delete-project";
         deleteProjectBtn.textContent = "delete_outline";
         deleteProjectBtn.addEventListener("click", (e) => {
+          const activeProjectName = toDoList.getActiveProjectName();
+
           toDoList.deleteProject(projectName);
           customProject.remove();
           storage.saveData();
           e.stopPropagation();
+          if (toDoList.getActiveProjectName() === projectName) {
+            toDoList.setActiveProjectName("Inbox")
+            displayProjectPage("Inbox");
+            displayTask();
+            displayInputTaskBtn();
+            setActiveClass("Inbox");
+          } else {
+            setActiveClass(activeProjectName);
+          }
         })
 
         customProject.appendChild(customProjectName);
@@ -75,6 +89,7 @@ const webInterface = (() => {
           toDoList.setActiveProjectName(e.currentTarget.dataset.project);
           displayProjectPage(e.currentTarget.dataset.project);
           displayTask();
+          setActiveClass(e.currentTarget.dataset.project);
         })
 
         customProjectList.appendChild(customProject);
@@ -166,7 +181,7 @@ const webInterface = (() => {
   }
 
   const hideTaskModal = () => {
-    const taskInputModal = document.querySelector(".task-modal-container");
+    const taskInputModal = document.querySelector(".task-input-modal");
     taskInputModal.style.display = "none";
 
     const taskTitle = document.querySelector("#task-title");
@@ -191,7 +206,7 @@ const webInterface = (() => {
 
     if (modalType === "add") {
       submitTaskBtn.textContent = "Add Task";
-      submitTaskBtn.classList.add("btn-edit-task");
+      submitTaskBtn.classList.add("btn-add-task");
       submitTaskBtn.addEventListener("click", () => {
         const activeProjectName = toDoList.getActiveProjectName();
         if (addTasktoProject(activeProjectName)) {
@@ -223,7 +238,7 @@ const webInterface = (() => {
     inputTaskBtn.appendChild(submitTaskBtn);
     inputTaskBtn.appendChild(cancelAddTaskBtn);
     
-    const taskInputModal = document.querySelector(".task-modal-container");
+    const taskInputModal = document.querySelector(".task-input-modal");
     taskInputModal.style.display = "flex";
   }
 
@@ -234,9 +249,11 @@ const webInterface = (() => {
 
     inputEditProject.setAttribute("type", "text");
     inputEditProject.className = "input-edit-project";
+    inputEditProject.value = activeProject.getProjectName();
     inputEditProject.addEventListener("keyup", (e) => {
       if (e.key === "Enter") {
         const newProjectName = inputEditProject.value
+        toDoList.setActiveProjectName(newProjectName);
         activeProject.setName(newProjectName);
         projectTitle.textContent = "";
         displayCustomProjects();
@@ -294,28 +311,40 @@ const webInterface = (() => {
         } else {
           displayInputTaskBtn();
         }
+        setActiveClass(projectName);
       });
     });
 
-    const customProjectInput = document.querySelector(".custom-project-input");
+    const addProjectModal = document.querySelector(".add-project-modal");
 
-    const addProjectBtn = document.querySelector(".add-project");
+    const addProjectBtn = document.querySelector(".add-project-btn");
     addProjectBtn.addEventListener("click", () => {
-      customProjectInput.style.display = "grid";
+      addProjectModal.style.display = "flex";
     });
 
-    const addNewProjectBtn = document.querySelector(".btn-add-project");
-    addNewProjectBtn.addEventListener("click", () => {
+    const submitProjectBtn = document.querySelector(".submit-project-btn");
+    submitProjectBtn.addEventListener("click", () => {
+      const projectList = toDoList.getAllProjects();
       const projectNameInput = document.querySelector("#custom-project-name");
-      addProject(projectNameInput.value);
+      const projectName = projectNameInput.value;
+      const activeProjectName = toDoList.getActiveProjectName();
+      
+      if (projectList.some(project => project.getProjectName() === projectName)) {
+        alert("Project already exists!");
+        return;
+      }
+
+      addProject(projectName);
       displayCustomProjects();
-      customProjectInput.style.display = "none";
+      addProjectModal.style.display = "none";
+      projectNameInput.value = "";
       storage.saveData();
+      setActiveClass(activeProjectName);
     })
 
-    const cancelAddProjectBtn = document.querySelector(".btn-cancel-add-project");
+    const cancelAddProjectBtn = document.querySelector(".cancel-submit-project");
     cancelAddProjectBtn.addEventListener("click", () => {
-      customProjectInput.style.display = "none";
+      addProjectModal.style.display = "none";
     })
   }
 
